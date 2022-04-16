@@ -1,12 +1,12 @@
 OS = LINUX
 
 CC = gcc
-CFLAGS = -I./include/ -L./libs/ -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
+CFLAGS = -I./include/ -L./libs/ -lraylib -lGL -lm -lpthread -ldl -lrt -lX11 -Ofast
 NAME = sandsim
 
 ifeq ($(OS), WINDOWS)
 CC = x86_64-w64-mingw32-gcc
-CFLAGS = -Wall -std=c99 -D_DEFAULT_SOURCE -Wno-missing-braces -Wunused-result -s -O1 -I./include/ -L./libs/ -Wl,--subsystem,windows -lraylibwin -lopengl32 -lgdi32 -lwinmm -static -lpthread -DPLATFORM_DESKTOP
+CFLAGS = -Wall -std=c99 -D_DEFAULT_SOURCE -Wno-missing-braces -Wunused-result -s -Ofast -I./include/ -L./libs/ -Wl,--subsystem,windows -lraylibwin -lopengl32 -lgdi32 -lwinmm -static -lpthread -DPLATFORM_DESKTOP
 NAME = sandsim.exe
 endif
 OBJ = main.o
