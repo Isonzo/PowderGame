@@ -81,8 +81,17 @@ void UpdateParticles(Particle** particles)
                     particles[i][j].type = Air;
                     particles[i][j+1].type = Sand;
                 }
+                else if (particles[i-1][j+1].type == Air && j + 1 < SCREEN_HEIGHT && i - 1 > 0)
+                {
+                    particles[i][j].type = Air;
+                    particles[i-1][j+1].type = Sand;
+                }
+                else if (particles[i+1][j+1].type == Air && j + 1 < SCREEN_HEIGHT && i + 1 < SCREEN_WIDTH)
+                {
+                    particles[i][j].type = Air;
+                    particles[i+1][j+1].type = Sand;
+                }
             }
-
         }
     }
 }
