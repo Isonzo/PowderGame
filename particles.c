@@ -1,7 +1,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include "include/raylib.h"
-#include "particles.h"
+#include "include/particles.h"
 
 struct particle
 {
