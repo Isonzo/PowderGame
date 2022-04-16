@@ -9,7 +9,7 @@ CC = x86_64-w64-mingw32-gcc
 CFLAGS = -Wall -std=c99 -D_DEFAULT_SOURCE -Wno-missing-braces -Wunused-result -s -Ofast -I./include/ -L./libs/ -Wl,--subsystem,windows -lraylibwin -lopengl32 -lgdi32 -lwinmm -static -lpthread -DPLATFORM_DESKTOP
 NAME = sandsim.exe
 endif
-OBJ = main.o
+OBJ = main.o particles.o
 
 %.o: %.c 
 	$(CC) -c -o $@ $< $(CFLAGS)
