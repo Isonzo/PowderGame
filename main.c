@@ -12,7 +12,7 @@ typedef struct particle
 }Particle;
 
 Particle** InitParticles(void);
-void UpdateParticle(Particle** particles, int x, int y);
+void UpdateParticles(Particle** particles);
 void DrawParticles(Particle** particles);
 
 int main(void)
@@ -30,6 +30,9 @@ int main(void)
         {
             particles[(int)mousePos.x][(int)mousePos.y].type = Sand;
         }
+
+        UpdateParticles(particles);
+
 
         BeginDrawing();
         ClearBackground(RAYWHITE);
@@ -63,16 +66,23 @@ Particle** InitParticles(void)
     return particles;
 }
 
-void UpdateParticle(Particle** particles, int x, int y)
+void UpdateParticles(Particle** particles)
 {
-    if (particles[x][y].type == Air) return;
-
-    if (particles[x][y].type == Sand)
+    for (int i = 0; i < SCREEN_WIDTH; ++i)
     {
-        if (particles[x][y+1].type == Air)
+        for (int j = 0; j < SCREEN_HEIGHT; ++j)
         {
-            particles[x][y].type = Air;
-            particles[x][y+1].type = Sand;
+            if (particles[i][j].type == Air) continue;
+
+            if (particles[i][j].type == Sand)
+            {
+                if (particles[i][j+1].type == Air && j + 1 < SCREEN_HEIGHT)
+                {
+                    particles[i][j].type = Air;
+                    particles[i][j+1].type = Sand;
+                }
+            }
+
         }
     }
 }
