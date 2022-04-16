@@ -88,14 +88,14 @@ void UpdateWater(Particle** particles, int x, int y)
     else if (particles[x+1][y+1].state == Gas && IsInBounds(x+1, y+1))
     {
         MoveParticle(&particles[x][y], &particles[x+1][y+1]);
-    }   
-    else if (particles[x-1][y].state == Gas && IsInBounds(x-1, y))
-    {
-        MoveParticle(&particles[x][y], &particles[x-1][y]);
     }
     else if (particles[x+1][y].state == Gas && IsInBounds(x+1, y))
     {
         MoveParticle(&particles[x][y], &particles[x+1][y]);
+    }
+    else if (particles[x-1][y].state == Gas && IsInBounds(x-1, y))
+    {
+        MoveParticle(&particles[x][y], &particles[x-1][y]);
     }
 }
 
@@ -123,7 +123,7 @@ void DrawParticles(Particle** particles)
 
 bool IsInBounds(int x, int y)
 {
-    return ((x > 0 && x < SCREEN_WIDTH) && (y > 0 && y < SCREEN_HEIGHT));
+    return ((x > 0 && x < SCREEN_WIDTH - 1) && (y > 0 && y < SCREEN_HEIGHT - 1));
 }
 
 void PlaceParticle(Particle** particles, int x, int y, int type)
