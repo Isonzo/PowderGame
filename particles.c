@@ -31,7 +31,7 @@ void UpdateParticles(Particle** particles)
 {
     for (int i = 0; i < SCREEN_WIDTH; ++i)
     {
-        for (int j = 0; j < SCREEN_HEIGHT; ++j)
+        for (int j = SCREEN_HEIGHT; j >= 0; --j)
         {
             switch (particles[i][j].type)
             {
