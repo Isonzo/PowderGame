@@ -13,7 +13,10 @@ typedef struct particle
 
 Particle** InitParticles(void);
 void UpdateParticles(Particle** particles);
+void MoveParticle(Particle* active , Particle* passive);
+void UpdateSand(Particle** particles, int x, int y);
 void DrawParticles(Particle** particles);
+bool IsInBounds(int x, int y);
 
 int main(void)
 {
@@ -26,7 +29,7 @@ int main(void)
     {
         Vector2 mousePos = GetMousePosition();
 
-        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && IsInBounds((int)mousePos.x, (int)mousePos.y))
         {
             particles[(int)mousePos.x][(int)mousePos.y].type = Sand;
         }
@@ -76,24 +79,34 @@ void UpdateParticles(Particle** particles)
 
             if (particles[i][j].type == Sand)
             {
-                if (particles[i][j+1].type == Air && j + 1 < SCREEN_HEIGHT)
-                {
-                    particles[i][j].type = Air;
-                    particles[i][j+1].type = Sand;
-                }
-                else if (particles[i-1][j+1].type == Air && j + 1 < SCREEN_HEIGHT && i - 1 > 0)
-                {
-                    particles[i][j].type = Air;
-                    particles[i-1][j+1].type = Sand;
-                }
-                else if (particles[i+1][j+1].type == Air && j + 1 < SCREEN_HEIGHT && i + 1 < SCREEN_WIDTH)
-                {
-                    particles[i][j].type = Air;
-                    particles[i+1][j+1].type = Sand;
-                }
+                UpdateSand(particles, i, j);
             }
+            
         }
     }
+}
+
+void MoveParticle(Particle* active , Particle* passive)
+{
+    int temp = active->type;
+    active->type = passive->type;
+    passive->type = temp;
+}
+
+void UpdateSand(Particle** particles, int x, int y)
+{
+    if (particles[x][y+1].type == Air && y + 1 < SCREEN_HEIGHT)
+    {
+        MoveParticle(&particles[x][y], &particles[x][y+1]);
+    }
+    else if (particles[x-1][y+1].type == Air && IsInBounds(x-1, y+1))
+    {
+        MoveParticle(&particles[x][y], &particles[x-1][y+1]);
+    }
+    else if (particles[x+1][y+1].type == Air && IsInBounds(x+1, y+1))
+    {
+        MoveParticle(&particles[x][y], &particles[x+1][y+1]);
+    }   
 }
 
 void DrawParticles(Particle** particles)
@@ -108,4 +121,9 @@ void DrawParticles(Particle** particles)
             }
         }
     }
+}
+
+bool IsInBounds(int x, int y)
+{
+    return ((x > 0 && x < SCREEN_WIDTH) && (y > 0 && y < SCREEN_HEIGHT));
 }
