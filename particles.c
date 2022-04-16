@@ -126,19 +126,38 @@ bool IsInBounds(int x, int y)
     return ((x > 0 && x < SCREEN_WIDTH - 1) && (y > 0 && y < SCREEN_HEIGHT - 1));
 }
 
-void PlaceParticle(Particle** particles, int x, int y, int type)
+void PlaceParticle(Particle** particles, int x, int y, int type, float radius)
 {
+    int chosenType, chosenState;
     switch (type)
     {
         case Sand:
-            particles[x][y].type = Sand;
-            particles[x][y].state = Solid;
+            chosenType = Sand;
+            chosenState = Solid;
             break;
         case Water:
-            particles[x][y].type = Water;
-            particles[x][y].state = Liquid;
+            chosenType = Water;
+            chosenState = Liquid;
             break;
         default:
             printf("No Particle :c\n");
+    }
+    
+    int radiusSqr = (int)(radius * radius);
+    for (int i = -(int)radius; i <= (int)radius; ++i)
+    {
+        for (int j = - (int)radius; j <= (int) radius; ++j)
+        {
+            int sqrSum = (i*i) + (j*j);
+            if (sqrSum <= radiusSqr)
+            {
+                if (IsInBounds(i + x, j + y))
+                {
+                    particles[i+x][j+y].type = chosenType;
+                    particles[i+x][j+y].state = chosenState;
+                };
+            }
+
+        }
     }
 }

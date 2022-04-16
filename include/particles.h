@@ -13,6 +13,6 @@ void UpdateSand(Particle** particles, int x, int y);
 void UpdateWater(Particle** particles, int x, int y);
 void DrawParticles(Particle** particles);
 bool IsInBounds(int x, int y);
-void PlaceParticle(Particle** particles, int x, int y, int type);
+void PlaceParticle(Particle** particles, int x, int y, int type, float radius);
 
 #endif

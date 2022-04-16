@@ -11,7 +11,9 @@ int main(void)
     SetTargetFPS(60);
     int offset = MeasureText("SandSim", FONT_SIZE);
 
-    Particle** particles = InitParticles();    
+    float brushSize = 20.0f;
+
+    Particle** particles = InitParticles();
 
     while (!WindowShouldClose())
     {
@@ -19,9 +21,17 @@ int main(void)
 
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && IsInBounds((int)mousePos.x, (int)mousePos.y))
         {
-            PlaceParticle(particles, (int)mousePos.x, (int)mousePos.y, 1);
+            
+            PlaceParticle(particles, (int)mousePos.x, (int)mousePos.y, 1, brushSize);
         }
-        PlaceParticle(particles, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 2);
+        else if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT) && IsInBounds((int)mousePos.x, (int)mousePos.y))
+        {
+            PlaceParticle(particles, (int)mousePos.x, (int)mousePos.y, 2, brushSize);
+        }
+
+        brushSize += GetMouseWheelMove()*5;
+        if (brushSize < 2) brushSize = 2;
+        if (brushSize > 50) brushSize = 50;
 
         UpdateParticles(particles);
 
@@ -32,9 +42,12 @@ int main(void)
         DrawText("SandSim", SCREEN_WIDTH/2 - offset/2, SCREEN_HEIGHT/2, FONT_SIZE, LIGHTGRAY);
         DrawParticles(particles);
 
+        DrawCircleLines(GetMouseX(), GetMouseY(), brushSize, BLACK);
+
         EndDrawing();
     }
 
     CloseWindow();
     return 0;
 }
+
