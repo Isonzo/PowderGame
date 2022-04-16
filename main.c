@@ -1,5 +1,6 @@
 #include "include/raylib.h"
 #include "include/particles.h"
+#include "time.h"
 
 #define FONT_SIZE 30
 
@@ -18,8 +19,9 @@ int main(void)
 
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && IsInBounds((int)mousePos.x, (int)mousePos.y))
         {
-            PlaceParticle(particles, (int)mousePos.x, (int)mousePos.y);
+            PlaceParticle(particles, (int)mousePos.x, (int)mousePos.y, 1);
         }
+        PlaceParticle(particles, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 2);
 
         UpdateParticles(particles);
 

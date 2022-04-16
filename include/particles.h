@@ -10,8 +10,9 @@ Particle** InitParticles(void);
 void UpdateParticles(Particle** particles);
 void MoveParticle(Particle* active , Particle* passive);
 void UpdateSand(Particle** particles, int x, int y);
+void UpdateWater(Particle** particles, int x, int y);
 void DrawParticles(Particle** particles);
 bool IsInBounds(int x, int y);
-void PlaceParticle(Particle** particles, int x, int y);
+void PlaceParticle(Particle** particles, int x, int y, int type);
 
 #endif
