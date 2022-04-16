@@ -1,5 +1,5 @@
 #include "include/raylib.h"
-#include "particles.h"
+#include "include/particles.h"
 
 #define FONT_SIZE 30
 
@@ -8,6 +8,7 @@ int main(void)
 {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "SandSimulator");
     SetTargetFPS(60);
+    int offset = MeasureText("SandSim", FONT_SIZE);
 
     Particle** particles = InitParticles();    
 
@@ -25,7 +26,6 @@ int main(void)
 
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        int offset = MeasureText("SandSim", FONT_SIZE);
 
         DrawText("SandSim", SCREEN_WIDTH/2 - offset/2, SCREEN_HEIGHT/2, FONT_SIZE, LIGHTGRAY);
         DrawParticles(particles);
